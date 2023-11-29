@@ -386,7 +386,10 @@ void CursorManager::_StartCapture(POINT cursorPt) {
 	// 在有黑边的情况下自动将光标调整到画面内
 
 	// 全局隐藏光标
-	ShowSystemCursor(false);
+	// Show cursor all the time (for testing)
+	if (!MagApp::Get().GetOptions().IsDebugMode()) {
+		ShowSystemCursor(false);
+	}
 
 	const RECT& srcFrameRect = MagApp::Get().GetFrameSource().GetSrcFrameRect();
 	const RECT& hostRect = MagApp::Get().GetHostWndRect();
@@ -673,6 +676,11 @@ void CursorManager::_AdjustCursorSpeed() {
 }
 
 void CursorManager::_UpdateCursorClip() {
+	// Disable all cursor clipping (for testing)
+	if (MagApp::Get().GetOptions().IsDebugMode()) {
+		return;
+	}
+
 	// 优先级：
 	// 1. 断点模式：不限制，捕获/取消捕获，支持 UI
 	// 2. 在 3D 游戏中限制光标：每帧都限制一次，不退出捕获，因此无法使用 UI，不支持多屏幕
