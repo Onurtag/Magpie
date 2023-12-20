@@ -159,7 +159,8 @@ static std::optional<LRESULT> HostWndProc(HWND /*hWnd*/, UINT message, WPARAM /*
 bool CursorManager::Initialize() {
 	_handlerId = MagApp::Get().RegisterWndProcHandler(HostWndProc);
 
-	if (MagApp::Get().GetOptions().Is3DGameMode()) {
+	//Always capture the cursor (for testing)
+	if (MagApp::Get().GetOptions().IsDebugMode() || MagApp::Get().GetOptions().Is3DGameMode()) {
 		POINT cursorPos;
 		::GetCursorPos(&cursorPos);
 		_StartCapture(cursorPos);
