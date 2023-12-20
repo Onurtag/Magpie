@@ -242,7 +242,8 @@ void CursorManager::OnBeginFrame() {
 		return;
 	}
 
-	if (MagApp::Get().GetOptions().Is3DGameMode()) {
+	//Always capture the cursor (testing)
+	if (!MagApp::Get().GetOptions().IsDebugMode() && MagApp::Get().GetOptions().Is3DGameMode()) {
 		HWND hwndFore = GetForegroundWindow();
 		if (hwndFore != MagApp::Get().GetHwndHost() && hwndFore != MagApp::Get().GetHwndSrc()) {
 			_curCursor = NULL;
